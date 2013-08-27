@@ -1,9 +1,36 @@
-<div id="map-canvas" style="width: 100%; height: 100%"></div>
-<%= map_data %>
+<div id="map-canvas" style="width: 500px; height: 500px"></div>
 
 <script>
 $(function(){
-  var mapData = <%= html_escape(map_data) %>
+  var mapData = <%= map_data.html_safe %>;
+  var mapOptions = {
+    center: new google.maps.LatLng(mapData[0].start_location.lat, mapData[0].start_location.lng),
+    zoom: 14,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+  var map = new google.maps.Map($("#map-canvas")[0], mapOptions);
+  var path = [];
+  var service = new google.maps.DirectionsService();
+  var poly;
   
+  // var points = SOME WAY TO PULL LAT LNG POINTS OUT OF MAP DATA INTO GOOGLE LATLNGOBJECTS WITH ADDED TRAVEL MODE ATTRIBUTE
+  
+  // THIS CODE SHOULD DRAW LINE ON MAP USING ALL THE DIFFERENT TURNING POINTS, SNAPPING TO ROAD
+  
+  // path.push(points.unshift.latlng)
+  // poly = new google.maps.Polyline({ map: map });
+  // poly.setPath(path)
+  // _.each(points, function(point){
+  //   service.route({
+  //     origin: path[path.length - 1],
+  //     destination: point.latlng,
+  //     travelMode: point.travelMode
+  //   }, function(result, status){
+  //     if (status == google.maps.DirectionsStatus.OK){
+  //       path = path.concat(result.routes[0].overview_path);
+  //       poly.setPath(path);
+  //     }
+  //   });
+  // });
 })
 </script>
