@@ -1,1 +1,27 @@
 <h1><%= @directions %></h1>
+
+
+
+<%= form_tag("/directions", method: "get", remote: true, id:"map-form") do %>
+  <input type="hidden" name="authenticity_token" 
+  value="<%= form_authenticity_token %>">
+  <label for="start-point">Start</label>
+  <input type="text" id="start-point" name="start_point">
+  
+  <label for="end-point">End</label>
+  <input type="text" id="end-point" name="end_point">
+  
+  <input type="submit" value="get directions">
+<% end %>
+
+<div id="map-region">
+</div>
+
+<script>
+$(function(){
+  $("#map-form").on("ajax:success", function(event, data){
+    $("#map-region").append(data); 
+    console.log(data)   ;
+  })  
+})
+</script>
